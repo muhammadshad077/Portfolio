@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form Validation</title>
+</head>
+<body>
+    
+    <center>
+
+        <h2>Login Form</h2>
+        
+        <form id="loginForm">
+            
+            Email:
+            <input type="text" id="email"><br><br>
+            
+            Password:
+            <input type="password" id="password"><br><br>
+            
+            Mobile No:
+            <input type="text" id="mobile"><br><br>
+            
+            Gender:
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <br><br>
+            
+            City:
+            <select id="city">
+                <option value="">Select City</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Pune">Pune</option>
+                <option value="Nagpur">Nagpur</option>
+            </select>
+            <br><br>
+            
+            <button type="button" onclick="validateForm()">Login</button>
+            
+        </form>
+    </center>
+
+<p id="error" style="color:red;"></p>
+
+<script>
+function validateForm() {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let mobile = document.getElementById("mobile").value;
+    let city = document.getElementById("city").value;
+    let gender = document.querySelector('input[name="gender"]:checked');
+
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let mobilePattern = /^[6-9]\d{9}$/;
+
+    if (!emailPattern.test(email)) {
+        document.getElementById("error").innerHTML = "Incorrect Email";
+        return;
+    }
+
+    if (password.trim() === "") {
+        document.getElementById("error").innerHTML = "Incorrect Password";
+        return;
+    }
+
+    if (!mobilePattern.test(mobile)) {
+        document.getElementById("error").innerHTML = "Incorrect Mobile Number";
+        return;
+    }
+
+    if (!gender) {
+        document.getElementById("error").innerHTML = "Select Gender";
+        return;
+    }
+
+    if (city === "") {
+        document.getElementById("error").innerHTML = "Select City";
+        return;
+    }
+
+    document.getElementById("error").innerHTML = "";
+    alert("Login Successful");
+}
+</script>
+
+</body>
+</html>
