@@ -1614,3 +1614,33 @@ header.site-header .brand-logo img {
   object-fit: cover !important;
   border-radius: 50% !important;
 }
+
+/* 1. Force the inner track to follow rigid width context */
+.testimonial-shell {
+  max-width: 850px !important;
+  width: 100% !important;
+  overflow: hidden !important; /* Boundary setup */
+  position: relative !important;
+}
+
+/* 2. Fix the active calculation tracking logic width alignment */
+.testimonial-track {
+  display: flex !important;
+  width: 100% !important;
+}
+
+/* 3. Extreme protection rule to prevent text clipping from right edges */
+.testimonial-card {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 20px 40px !important; /* Left & Right custom padding inside the card */
+}
+
+/* 4. Shrink quote text size globally to perfectly fit smaller viewport layouts */
+.testimonial-card p {
+  font-size: clamp(1.15rem, 2.5vw, 1.65rem) !important;
+  line-height: 1.4 !important;
+  word-wrap: break-word !important;
+}
