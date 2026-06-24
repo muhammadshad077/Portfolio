@@ -105,7 +105,8 @@ function toggleOtherProjectField() {
 }
 
 function validateForm(event) {
-  event.preventDefault();
+  // 1. Sabse pehle form reload event ko completely block karo
+  event.preventDefault(); 
 
   const name = document.getElementById("name");
   const email = document.getElementById("email");
@@ -131,14 +132,15 @@ function validateForm(event) {
     successMessage.style.color = "#6366f1";
     successMessage.textContent = "Sending message... Please wait.";
 
-    // LIVE EMAILJS ENGINE EXECUTION WITH YOUR ACTIVE SERVICE ID
+    // SILENT BACKGROUND SUBMISSION (BINA PAGE RELOAD KIYE)
     emailjs.sendForm('service_4f2ilve', 'contact_us', contactForm)
       .then(() => {
           successMessage.style.color = "#00ff88";
           successMessage.textContent = "✔ Message sent successfully! I will contact you soon.";
           contactForm.reset();
           toggleOtherProjectField();
-      }, (error) => {
+      })
+      .catch((error) => {
           successMessage.style.color = "#ff3333";
           successMessage.textContent = "❌ Failed to send message. Please try again.";
           console.log('EmailJS Error:', error);
