@@ -233,10 +233,10 @@ function validateForm(event) {
 
   if (successMessage) successMessage.textContent = "";
 
+  // FIXED INTERACTION FOR WEB3FORMS SUBMISSION
   if (isValid) {
-    successMessage.textContent = "Thank you. Your message is ready to be sent.";
-    contactForm.reset();
-    toggleOtherProjectField();
+    successMessage.textContent = "Sending your message... Please wait.";
+    contactForm.submit(); // Direct trigger to Web3Forms server
   }
 }
 
