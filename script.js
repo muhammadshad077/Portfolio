@@ -1,39 +1,10 @@
-const loader = document.getElementById("loader");
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.getElementById("navLinks");
 const themeToggle = document.getElementById("themeToggle");
-const typingText = document.getElementById("typingText");
-const filterButtons = document.querySelectorAll(".filter-btn");
-const projectCards = document.querySelectorAll(".project-card");
-const revealItems = document.querySelectorAll(".reveal");
-const backToTop = document.getElementById("backToTop");
-const testimonialTrack = document.getElementById("testimonialTrack");
-const sliderDots = document.getElementById("sliderDots");
-const testimonialCards = document.querySelectorAll(".testimonial-card");
 const contactForm = document.getElementById("contactForm");
 const projectType = document.getElementById("projectType");
 const otherProjectGroup = document.getElementById("otherProjectGroup");
 const otherProject = document.getElementById("otherProject");
-
-const typingPhrases = [
-  "Full Stack Developer | Freelancer | Problem Solver",
-  "I build responsive web applications.",
-  "I turn ideas into polished digital products."
-];
-
-let phraseIndex = 0;
-let characterIndex = 0;
-let isDeleting = false;
-let testimonialIndex = 0;
-
-// SAFE PRELOADER CONTROLLER
-window.addEventListener("load", () => {
-  if (loader) {
-    setTimeout(() => { 
-      loader.classList.add("hide"); 
-    }, 400);
-  }
-});
 
 if (navToggle && navLinks) {
   navToggle.addEventListener("click", () => {
@@ -60,51 +31,6 @@ if (themeToggle) {
   });
 }
 
-function typeLoop() {
-  if (!typingText) return;
-  const currentPhrase = typingPhrases[phraseIndex];
-  characterIndex += isDeleting ? -1 : 1;
-  typingText.textContent = currentPhrase.slice(0, characterIndex);
-  if (!isDeleting && characterIndex === currentPhrase.length) {
-    isDeleting = true;
-    setTimeout(typeLoop, 1300);
-    return;
-  }
-  if (isDeleting && characterIndex === 0) {
-    isDeleting = false;
-    phraseIndex = (phraseIndex + 1) % typingPhrases.length;
-  }
-  setTimeout(typeLoop, isDeleting ? 45 : 78);
-}
-
-if (filterButtons.length > 0) {
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const filterValue = button.dataset.filter;
-      filterButtons.forEach((btn) => btn.classList.remove("active"));
-      button.classList.add("active");
-      projectCards.forEach((card) => {
-        const shouldShow = filterValue === "all" || card.dataset.category === filterValue;
-        card.classList.toggle("hide", !shouldShow);
-      });
-    });
-  });
-}
-
-if ("IntersectionObserver" in window && revealItems.length > 0) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.16 });
-  revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add("active"));
-}
-
 function toggleOtherProjectField() {
   if (!projectType || !otherProjectGroup || !otherProject) return;
   const isOther = projectType.value === "Other";
@@ -112,50 +38,70 @@ function toggleOtherProjectField() {
   otherProject.required = isOther;
 }
 
-function validateForm(event) {
-  event.preventDefault(); 
-
-  const name = document.getElementById("name");
-  const email = document.getElementById("email");
-  const mobile = document.getElementById("mobile");
-  const message = document.getElementById("message");
-  const successMessage = document.getElementById("successMessage");
-
-  const errors = { nameError: "", emailError: "", mobileError: "", projectTypeError: "", otherProjectError: "", messageError: "" };
-  let isValid = true;
-
-  if (name && !name.value.trim()) { errors.nameError = "Name is required."; isValid = false; }
-  if (email && (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()))) { errors.emailError = "Enter a valid email."; isValid = false; }
-  if (mobile && (!mobile.value.trim() || !/^\d{10}$/.test(mobile.value.trim()))) { errors.mobileError = "Enter 10 digit mobile number."; isValid = false; }
-  if (projectType && !projectType.value) { errors.projectTypeError = "Select your project type."; isValid = false; }
-  if (message && !message.value.trim()) { errors.messageError = "Message is required."; isValid = false; }
-
-  Object.keys(errors).forEach((key) => {
-    const errorElement = document.getElementById(key);
-    if (errorElement) errorElement.textContent = errors[key];
-  });
-
-  if (isValid && successMessage && contactForm) {
-    successMessage.style.color = "#6366f1";
-    successMessage.textContent = "Sending message... Please wait.";
-
-    emailjs.sendForm('service_4f2ilve', 'contact_us', contactForm)
-      .then(() => {
-          successMessage.style.color = "#00ff88";
-          successMessage.textContent = "✔ Message sent successfully! I will contact you soon.";
-          contactForm.reset();
-          toggleOtherProjectField();
-      })
-      .catch((error) => {
-          successMessage.style.color = "#ff3333";
-          successMessage.textContent = "❌ Failed to send message. Please try again.";
-          console.log('EmailJS Error:', error);
-      });
-  }
+if (projectType) {
+  projectType.addEventListener("change", toggleOtherProjectField);
 }
 
-if (projectType) { projectType.addEventListener("change", toggleOtherProjectField); }
-if (contactForm) { contactForm.addEventListener("submit", validateForm); }
+if (contactForm) {
+  contactForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Kisi bhi haal mein page reload hone se rokna hai
+
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const mobile = document.getElementById("mobile");
+    const message = document.getElementById("message");
+    const successMessage = document.getElementById("successMessage");
+
+    // Clean error displays before checking
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("mobileError").textContent = "";
+    document.getElementById("projectTypeError").textContent = "";
+    document.getElementById("messageError").textContent = "";
+    if (successMessage) successMessage.textContent = "";
+
+    let isValid = true;
+
+    if (!name || !name.value.trim()) { document.getElementById("nameError").textContent = "Name is required."; isValid = false; }
+    if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { document.getElementById("emailError").textContent = "Enter a valid email."; isValid = false; }
+    
+    // Strict Input Filter for Indian standard numbers starting ONLY with 6,7,8,9
+    const mobileValue = mobile ? mobile.value.trim() : "";
+    if (!mobileValue || !/^[6-9]\d{9}$/.test(mobileValue)) { 
+      document.getElementById("mobileError").textContent = "Mobile number must be 10 digits and start with 6, 7, 8, or 9."; 
+      isValid = false; 
+    }
+    
+    if (projectType && !projectType.value) { document.getElementById("projectTypeError").textContent = "Select your project type."; isValid = false; }
+    if (!message || !message.value.trim()) { document.getElementById("messageError").textContent = "Message is required."; isValid = false; }
+
+    if (isValid) {
+      if (successMessage) {
+        successMessage.style.color = "#6366f1";
+        successMessage.textContent = "Sending message... Please wait.";
+      }
+
+      // Live Execution to trigger verification layer
+      emailjs.sendForm('service_4f2ilve', 'contact_us', this)
+        .then(() => {
+            alert("✔ Thank you! Your message has been sent successfully.");
+            if (successMessage) {
+              successMessage.style.color = "#00ff88";
+              successMessage.textContent = "✔ Message sent successfully!";
+            }
+            contactForm.reset();
+            toggleOtherProjectField();
+        })
+        .catch((error) => {
+            alert("❌ Failed to send message. Please try again.");
+            if (successMessage) {
+              successMessage.style.color = "#ff3333";
+              successMessage.textContent = "❌ Failed to send message.";
+            }
+            console.log('EmailJS Error:', error);
+        });
+    }
+  });
+}
 
 applySavedTheme();
-typeLoop();
