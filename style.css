@@ -1594,3 +1594,23 @@ textarea {
     margin-bottom: 20px;
   }
 }
+
+/* 1. Force the Navbar Header Logo to stay exactly 46px and never explode */
+.brand-logo img, 
+header.site-header .brand-logo img {
+  width: 46px !important;
+  max-width: 46px !important;
+  height: 46px !important;
+  max-height: 46px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+/* 2. Emergency Backup for index.html summary card if image stretches */
+.page-summary-card img {
+  width: 112px !important;
+  height: 112px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
