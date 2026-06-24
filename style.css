@@ -1665,3 +1665,10 @@ header.site-header .brand-logo img {
 .project-card.hide {
   display: none !important;
 }
+
+
+.reveal, .fade-in, main, section, div, form, aside {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
