@@ -477,25 +477,23 @@
           <a href="tel:+917385302530">+91 7385302530</a>
         </aside>
 
-        <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        
+        <form class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST">
           
-          <!-- Aapki Web3Forms Access Key Automatically Embedded -->
+          <!-- Aapki Web3Forms Access Key Auto-Filled -->
           <input type="hidden" name="access_key" value="ffa5acdd-e0c9-4b02-8612-92288a6120f9">
 
           <div class="form-group">
             <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
-            <small class="error-message" id="nameError"></small>
+            <input type="text" id="name" name="name" required placeholder="Enter your name">
           </div>
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email">
-            <small class="error-message" id="emailError"></small>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
           </div>
           <div class="form-group">
             <label for="mobile">Mobile Number</label>
-            <input type="tel" id="mobile" name="mobile" placeholder="10 digit mobile number">
-            <small class="error-message" id="mobileError"></small>
+            <input type="tel" id="mobile" name="mobile" required placeholder="10 digit mobile number">
           </div>
           <div class="form-group">
             <label for="projectType">Project Type</label>
@@ -514,20 +512,16 @@
               <option>Custom Project</option>
               <option>Other</option>
             </select>
-            <small class="error-message" id="projectTypeError"></small>
           </div>
           <div class="form-group other-project-group" id="otherProjectGroup">
             <label for="otherProject">Please describe your project</label>
             <input type="text" id="otherProject" name="otherProject" placeholder="Briefly describe your project">
-            <small class="error-message" id="otherProjectError"></small>
           </div>
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project"></textarea>
-            <small class="error-message" id="messageError"></small>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project"></textarea>
           </div>
-          <button class="btn btn-primary form-submit" type="submit">Send Message</button>
-          <p class="success-message" id="successMessage" role="status"></p>
+          <button class="btn btn-primary" type="submit" style="background: #4f46e5; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">Send Message</button>
         </form>
       </div>
     </section>
@@ -569,7 +563,7 @@
         </div>
       </div>
     </div>
-    <p class="copyright">&copy; <span data-year></span> Muhammad Shad. All rights reserved.</p>
+    <p class="copyright">&copy; 2026 Muhammad Shad. All rights reserved.</p>
   </footer>
 
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">Top</button>
