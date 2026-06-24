@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal portfolio and freelancing website for a professional web developer. Hire for website development, frontend development, UI/UX design, and freelance projects.">
-  <meta name="keywords" content="web developer, freelancer, frontend developer, UI UX designer, portfolio, hire developer">
+  <meta name="description" content="Muhammad Shad is a Full Stack Developer building modern, responsive, scalable web solutions for recruiters, companies, freelance clients, and startups.">
+  <meta name="keywords" content="Muhammad Shad, full stack developer, web developer, freelancer, projects, frontend developer, backend developer">
   <meta name="author" content="Muhammad Shad">
-  <title>Muhammad Shad | Web Developer & Freelancer | Problem Solver</title>
+  <title>Muhammad Shad | Full Stack Developer Projects</title>
   <link rel="preconnect" href="https://www.youtube.com">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -18,7 +18,13 @@
 
   <header class="site-header" id="top">
     <nav class="navbar" aria-label="Primary navigation">
-      <a href="#home" class="logo" aria-label="Go to home">MS<span>.</span></a>
+      <a href="index.html" class="brand-logo active" aria-label="Muhammad Shad home page">
+        <img src="assets/shad-photo.png" alt="Muhammad Shad">
+        <span>
+          <strong>Muhammad Shad</strong>
+          <small>Full Stack Developer</small>
+        </span>
+      </a>
 
       <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
         <span></span>
@@ -27,13 +33,13 @@
       </button>
 
       <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#testimonials">Reviews</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
 
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch dark or light mode">
@@ -56,12 +62,12 @@
         <h1>Hi, I am <span>Muhammad Shad</span></h1>
         <h2><span id="typingText"></span></h2>
         <p class="hero-copy">
-          I design and develop fast, responsive, conversion-focused websites for companies,
-          startups, and clients who need reliable digital products.
+          I build responsive, high-performance web applications for businesses, recruiters,
+          startups, and clients who need clean design with reliable functionality.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">Hire Me</a>
-          <a href="#portfolio" class="btn btn-secondary">View Projects</a>
+          <a href="#projects" class="btn btn-secondary">View Projects</a>
           <a href="assets/shad-resume.pdf" class="btn btn-secondary btn-icon" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -98,10 +104,10 @@
     <section class="section about" id="about">
       <div class="section-heading reveal">
         <p class="eyebrow">About Me</p>
-        <h2>Developer mindset, business-focused delivery.</h2>
+        <h2>Full stack thinking with client-focused delivery.</h2>
         <p>
-          I create clean, accessible, and scalable web experiences that help brands look credible,
-          explain their value clearly, and turn visitors into customers.
+          I create clean, scalable, and accessible web experiences that help brands explain their value,
+          build trust, and turn visitors into customers.
         </p>
       </div>
 
@@ -109,9 +115,9 @@
         <article class="about-panel reveal">
           <h3>Professional Introduction</h3>
           <p>
-            I am a web developer and freelancer specializing in modern frontend experiences,
-            responsive layouts, landing pages, business websites, and interactive web interfaces.
-            My work combines thoughtful design, solid code, and dependable communication.
+            I am a Full Stack Developer focused on frontend interfaces, backend foundations,
+            responsive websites, landing pages, and practical web applications. My work combines
+            modern UI, structured code, and clear communication.
           </p>
           <div class="achievement-list">
             <div><strong>2+</strong><span>Years Learning & Building</span></div>
@@ -122,20 +128,20 @@
 
         <div class="skills-grid reveal">
           <article class="skill-card">
-            <span>HTML</span>
-            <p>Semantic, SEO-friendly structure.</p>
-          </article>
-          <article class="skill-card">
-            <span>CSS</span>
-            <p>Responsive layouts, animations, modern UI.</p>
+            <span>HTML / CSS</span>
+            <p>Semantic structure, responsive layouts, and modern animations.</p>
           </article>
           <article class="skill-card">
             <span>JavaScript</span>
-            <p>Interactive forms, filters, sliders, DOM logic.</p>
+            <p>Interactive forms, filters, sliders, and dynamic user experiences.</p>
+          </article>
+          <article class="skill-card">
+            <span>Backend Basics</span>
+            <p>API thinking, database concepts, and application structure.</p>
           </article>
           <article class="skill-card">
             <span>UI/UX</span>
-            <p>Clean flows, visual hierarchy, usable screens.</p>
+            <p>Clean flows, readable interfaces, and polished visual hierarchy.</p>
           </article>
         </div>
       </div>
@@ -151,30 +157,30 @@
         <article class="service-card reveal">
           <div class="service-icon">01</div>
           <h3>Website Development</h3>
-          <p>Professional business websites, landing pages, portfolios, and service pages built for speed and clarity.</p>
+          <p>Professional business websites, landing pages, personal brand sites, and service pages.</p>
         </article>
         <article class="service-card reveal">
           <div class="service-icon">02</div>
           <h3>Frontend Development</h3>
-          <p>Responsive frontend interfaces using HTML, CSS, and JavaScript with polished interactions.</p>
+          <p>Responsive interfaces using HTML, CSS, JavaScript, animations, and reusable UI patterns.</p>
         </article>
         <article class="service-card reveal">
           <div class="service-icon">03</div>
-          <h3>UI/UX Design</h3>
-          <p>Modern layouts, improved readability, user journeys, and design systems that feel premium.</p>
+          <h3>Backend Development</h3>
+          <p>Application structure, API-ready planning, form workflows, and database-backed features.</p>
         </article>
         <article class="service-card reveal">
           <div class="service-icon">04</div>
-          <h3>Freelance Projects</h3>
-          <p>Reliable support for small businesses, founders, creators, and teams needing fast execution.</p>
+          <h3>UI/UX Design</h3>
+          <p>Modern layouts, user journeys, wireframes, and premium interface improvements.</p>
         </article>
       </div>
     </section>
 
-    <section class="section portfolio" id="portfolio">
+    <section class="section projects" id="projects">
       <div class="section-heading reveal">
-        <p class="eyebrow">Portfolio</p>
-        <h2>Selected project work.</h2>
+        <p class="eyebrow">Projects</p>
+        <h2>Featured Projects</h2>
       </div>
 
       <div class="filter-bar reveal" aria-label="Project filters">
@@ -213,11 +219,11 @@
           </div>
         </article>
         <article class="project-card reveal" data-category="website">
-          <div class="project-image image-four" role="img" aria-label="Portfolio website preview placeholder"></div>
+          <div class="project-image image-four" role="img" aria-label="Personal brand website preview placeholder"></div>
           <div class="project-body">
             <span>Website</span>
-            <h3>Personal Brand Portfolio</h3>
-            <p>A polished portfolio structure for freelancers who need to showcase skills and win clients.</p>
+            <h3>Personal Brand Website</h3>
+            <p>A polished structure for freelancers who need to showcase skills and win clients.</p>
             <small>SEO / CSS Animation / Forms</small>
           </div>
         </article>
@@ -242,9 +248,9 @@
       </div>
     </section>
 
-    <section class="section testimonials" id="testimonials">
+    <section class="section testimonials" id="reviews">
       <div class="section-heading reveal">
-        <p class="eyebrow">Testimonials</p>
+        <p class="eyebrow">Reviews</p>
         <h2>What clients say.</h2>
       </div>
 
@@ -294,7 +300,6 @@
             <li>Basic Animations</li>
           </ul>
         </article>
-
         <article class="pricing-card featured-plan reveal">
           <span class="plan-label">Standard Website</span>
           <h3>Starting from <strong>&#8377;8,000</strong></h3>
@@ -306,7 +311,6 @@
             <li>Basic SEO</li>
           </ul>
         </article>
-
         <article class="pricing-card reveal">
           <span class="plan-label">Premium Website</span>
           <h3>Starting from <strong>&#8377;15,000</strong></h3>
@@ -318,7 +322,6 @@
             <li>SEO Optimization</li>
           </ul>
         </article>
-
         <article class="pricing-card reveal">
           <span class="plan-label">Custom Project</span>
           <h3><strong>Price based on requirements.</strong></h3>
@@ -354,31 +357,45 @@
             <input type="text" id="name" name="name" placeholder="Enter your name">
             <small class="error-message" id="nameError"></small>
           </div>
-
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter your email">
             <small class="error-message" id="emailError"></small>
           </div>
-
           <div class="form-group">
             <label for="mobile">Mobile Number</label>
             <input type="tel" id="mobile" name="mobile" placeholder="10 digit mobile number">
             <small class="error-message" id="mobileError"></small>
           </div>
-
           <div class="form-group">
-            <label for="subject">Project Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Website, UI design, freelance project">
-            <small class="error-message" id="subjectError"></small>
+            <label for="projectType">Project Type</label>
+            <select id="projectType" name="projectType" required>
+              <option value="">Select Your Project Type</option>
+              <option>Business Website</option>
+              <option>Portfolio Website</option>
+              <option>E-Commerce Website</option>
+              <option>Full Stack Web Application</option>
+              <option>Frontend Development</option>
+              <option>Backend Development</option>
+              <option>UI/UX Design</option>
+              <option>Website Maintenance</option>
+              <option>Bug Fixing</option>
+              <option>Performance Optimization</option>
+              <option>Custom Project</option>
+              <option>Other</option>
+            </select>
+            <small class="error-message" id="projectTypeError"></small>
           </div>
-
+          <div class="form-group other-project-group" id="otherProjectGroup">
+            <label for="otherProject">Please describe your project</label>
+            <input type="text" id="otherProject" name="otherProject" placeholder="Briefly describe your project">
+            <small class="error-message" id="otherProjectError"></small>
+          </div>
           <div class="form-group">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" placeholder="Tell me about your project"></textarea>
             <small class="error-message" id="messageError"></small>
           </div>
-
           <button class="btn btn-primary form-submit" type="submit">Send Message</button>
           <p class="success-message" id="successMessage" role="status"></p>
         </form>
@@ -388,39 +405,41 @@
 
   <footer class="footer">
     <div class="footer-grid">
-      <div>
-        <a href="#home" class="logo">MS<span>.</span></a>
-        <p>Modern web development for businesses, founders, and freelance clients.</p>
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Muhammad Shad</a>
+        <strong>Full Stack Developer</strong>
+        <p>Transforming ideas into high-performance web solutions with clean design and powerful functionality.</p>
       </div>
 
       <nav aria-label="Footer quick links">
         <h3>Quick Links</h3>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
       </nav>
 
       <div>
         <h3>Social</h3>
         <div class="social-links">
-          <a href="https://www.linkedin.com/in/muhammad-aiman-shad-59a851412?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+          <a class="social-link linkedin" href="https://www.linkedin.com/in/muhammad-aiman-shad-59a851412?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" aria-label="LinkedIn profile">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 3V21H10V9Z"></path></svg>
           </a>
-          <a href="https://github.com/muhammadshad077" target="_blank" rel="noopener" aria-label="GitHub profile">
+          <a class="social-link github" href="https://github.com/muhammadshad077" target="_blank" rel="noopener" aria-label="GitHub profile">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.5 21.8c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.7 2.1 2.8 1.5.1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.6 0-1.2.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.3-2.8 5.3-5.4 5.6.4.4.8 1.1.8 2.2V22c0 .4.2.7.8.6A11.2 11.2 0 0 0 12 .8Z"></path></svg>
           </a>
-          <a href="https://www.instagram.com/muhammad_shad_777?igsh=MXJuemZienk0ODdqbA==" target="_blank" rel="noopener" aria-label="Instagram profile">
+          <a class="social-link instagram" href="https://www.instagram.com/muhammad_shad_777?igsh=MXJuemZienk0ODdqbA==" target="_blank" rel="noopener" aria-label="Instagram profile">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm8.7 2.2a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7.3a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Z"></path></svg>
           </a>
-          <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X Twitter profile">
+          <a class="social-link x-twitter" href="https://x.com/" target="_blank" rel="noopener" aria-label="X Twitter profile">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.4 10.2 22.9 0h-2l-7.4 8.8L7.7 0H1l8.9 13.1L1 24h2l7.8-9.5L17.1 24H24l-9.6-13.8Zm-2.8 3.4-.9-1.3L3.5 1.5h3.2l5.8 8.6.9 1.3 7.6 11.2h-3.2l-6.2-9Z"></path></svg>
           </a>
         </div>
       </div>
     </div>
-    <p class="copyright">&copy; <span id="year"></span> Muhammad Shad. All rights reserved.</p>
+    <p class="copyright">&copy; <span data-year></span> Muhammad Shad. All rights reserved.</p>
   </footer>
 
   <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">Top</button>

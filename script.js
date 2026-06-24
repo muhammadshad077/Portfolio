@@ -11,11 +11,14 @@ const testimonialTrack = document.getElementById("testimonialTrack");
 const sliderDots = document.getElementById("sliderDots");
 const testimonialCards = document.querySelectorAll(".testimonial-card");
 const contactForm = document.getElementById("contactForm");
+const projectType = document.getElementById("projectType");
+const otherProjectGroup = document.getElementById("otherProjectGroup");
+const otherProject = document.getElementById("otherProject");
 
 const typingPhrases = [
-  "Web Developer | Freelancer | Problem Solver",
-  "I build responsive websites.",
-  "I turn ideas into polished interfaces."
+  "Full Stack Developer | Freelancer | Problem Solver",
+  "I build responsive web applications.",
+  "I turn ideas into polished digital products."
 ];
 
 let phraseIndex = 0;
@@ -24,24 +27,30 @@ let isDeleting = false;
 let testimonialIndex = 0;
 
 window.addEventListener("load", () => {
+  if (!loader) return;
+
   setTimeout(() => {
     loader.classList.add("hide");
   }, 600);
 });
 
-navToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-});
-
-document.querySelectorAll(".nav-links a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
+if (navToggle && navLinks) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
   });
-});
+
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
 
 function applySavedTheme() {
+  if (!themeToggle) return;
+
   const savedTheme = localStorage.getItem("portfolioTheme");
 
   if (savedTheme === "dark") {
@@ -50,23 +59,20 @@ function applySavedTheme() {
   }
 }
 
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  const isDark = document.body.classList.contains("dark-mode");
-  localStorage.setItem("portfolioTheme", isDark ? "dark" : "light");
-  themeToggle.querySelector(".theme-icon").textContent = isDark ? "Light" : "Dark";
-});
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("portfolioTheme", isDark ? "dark" : "light");
+    themeToggle.querySelector(".theme-icon").textContent = isDark ? "Light" : "Dark";
+  });
+}
 
-// Lightweight typing effect for the hero tagline.
 function typeLoop() {
+  if (!typingText) return;
+
   const currentPhrase = typingPhrases[phraseIndex];
-
-  if (isDeleting) {
-    characterIndex -= 1;
-  } else {
-    characterIndex += 1;
-  }
-
+  characterIndex += isDeleting ? -1 : 1;
   typingText.textContent = currentPhrase.slice(0, characterIndex);
 
   if (!isDeleting && characterIndex === currentPhrase.length) {
@@ -83,7 +89,6 @@ function typeLoop() {
   setTimeout(typeLoop, isDeleting ? 45 : 78);
 }
 
-// Portfolio category filtering.
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const filterValue = button.dataset.filter;
@@ -98,19 +103,24 @@ filterButtons.forEach((button) => {
   });
 });
 
-// Reveal sections when they enter the viewport.
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("active");
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.16 });
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.16 });
 
-revealItems.forEach((item) => revealObserver.observe(item));
+  revealItems.forEach((item) => revealObserver.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add("active"));
+}
 
 function buildSliderDots() {
+  if (!sliderDots || testimonialCards.length === 0) return;
+
   testimonialCards.forEach((_, index) => {
     const dot = document.createElement("button");
     dot.type = "button";
@@ -124,6 +134,8 @@ function buildSliderDots() {
 }
 
 function updateTestimonials() {
+  if (!testimonialTrack || !sliderDots) return;
+
   testimonialTrack.style.transform = `translateX(-${testimonialIndex * 100}%)`;
 
   sliderDots.querySelectorAll("button").forEach((dot, index) => {
@@ -132,18 +144,32 @@ function updateTestimonials() {
 }
 
 function autoSlideTestimonials() {
+  if (testimonialCards.length === 0) return;
+
   testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
   updateTestimonials();
 }
 
-// Contact form validation: required fields, name, email, mobile, and message length.
+function toggleOtherProjectField() {
+  if (!projectType || !otherProjectGroup || !otherProject) return;
+
+  const isOther = projectType.value === "Other";
+  otherProjectGroup.classList.toggle("show", isOther);
+  otherProject.required = isOther;
+
+  if (!isOther) {
+    otherProject.value = "";
+    const otherError = document.getElementById("otherProjectError");
+    if (otherError) otherError.textContent = "";
+  }
+}
+
 function validateForm(event) {
   event.preventDefault();
 
   const name = document.getElementById("name");
   const email = document.getElementById("email");
   const mobile = document.getElementById("mobile");
-  const subject = document.getElementById("subject");
   const message = document.getElementById("message");
   const successMessage = document.getElementById("successMessage");
 
@@ -151,7 +177,8 @@ function validateForm(event) {
     nameError: "",
     emailError: "",
     mobileError: "",
-    subjectError: "",
+    projectTypeError: "",
+    otherProjectError: "",
     messageError: ""
   };
 
@@ -181,8 +208,13 @@ function validateForm(event) {
     isValid = false;
   }
 
-  if (!subject.value.trim()) {
-    errors.subjectError = "Project subject is required.";
+  if (projectType && !projectType.value) {
+    errors.projectTypeError = "Please select your project type.";
+    isValid = false;
+  }
+
+  if (projectType && projectType.value === "Other" && otherProject && !otherProject.value.trim()) {
+    errors.otherProjectError = "Please describe your project.";
     isValid = false;
   }
 
@@ -195,20 +227,23 @@ function validateForm(event) {
   }
 
   Object.keys(errors).forEach((key) => {
-    document.getElementById(key).textContent = errors[key];
+    const errorElement = document.getElementById(key);
+    if (errorElement) errorElement.textContent = errors[key];
   });
 
-  successMessage.textContent = "";
+  if (successMessage) successMessage.textContent = "";
 
   if (isValid) {
     successMessage.textContent = "Thank you. Your message is ready to be sent.";
     contactForm.reset();
+    toggleOtherProjectField();
   }
 }
 
 function handleScrollState() {
-  const scrolled = window.scrollY > 420;
-  backToTop.classList.toggle("show", scrolled);
+  if (backToTop) {
+    backToTop.classList.toggle("show", window.scrollY > 420);
+  }
 
   document.querySelectorAll("section[id]").forEach((section) => {
     const sectionTop = section.offsetTop - 120;
@@ -224,17 +259,30 @@ function handleScrollState() {
   });
 }
 
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+if (backToTop) {
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 
-contactForm.addEventListener("submit", validateForm);
+if (projectType) {
+  projectType.addEventListener("change", toggleOtherProjectField);
+}
+
+if (contactForm) {
+  contactForm.addEventListener("submit", validateForm);
+}
+
 window.addEventListener("scroll", handleScrollState);
-document.getElementById("year").textContent = new Date().getFullYear();
+
+document.querySelectorAll("[data-year]").forEach((yearElement) => {
+  yearElement.textContent = new Date().getFullYear();
+});
 
 applySavedTheme();
 typeLoop();
 buildSliderDots();
 updateTestimonials();
 setInterval(autoSlideTestimonials, 4500);
+toggleOtherProjectField();
 handleScrollState();
