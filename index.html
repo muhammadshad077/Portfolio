@@ -199,7 +199,7 @@
         <button class="filter-btn" type="button" data-filter="frontend">Frontend</button>
         <button class="filter-btn" type="button" data-filter="uiux">UI/UX</button>
       </div>
-      
+
     <div class="project-grid">
       
       <!-- Project 1: BotCraft Studio Dashboard (High-Fidelity UI Replication from Screenshot) -->
@@ -477,7 +477,11 @@
           <a href="tel:+917385302530">+91 7385302530</a>
         </aside>
 
-        <form class="contact-form reveal" id="contactForm" novalidate>
+        <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          
+          <!-- Aapki Web3Forms Access Key Automatically Embedded -->
+          <input type="hidden" name="access_key" value="ffa5acdd-e0c9-4b02-8612-92288a6120f9">
+
           <div class="form-group">
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Enter your name">
