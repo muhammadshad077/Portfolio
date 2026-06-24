@@ -1523,3 +1523,74 @@ textarea {
     transition-duration: 0.01ms !important;
   }
 }
+
+.profile-orbit, .profile-orbit::before, .profile-orbit::after {
+  display: none !important;
+}
+
+.profile-img-frame {
+  width: 200px; /* Size 20% badha diya hai */
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  
+  /* Modern Premium Glass Layer */
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* Silver Glow aur Professional Shadow Effect */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.04), 
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    0 0 25px rgba(255, 255, 255, 0.85);
+  
+  /* Floating Motion aur Smooth Transitions */
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: profileFloat 6s ease-in-out infinite;
+}
+
+/* 2. Strict Inner Border Container (Chrome Layout Overflow Fix) */
+.profile-img-container {
+  width: 90%;  /* Image aur outer frame ke beech perfect barabar gap */
+  height: 90%;
+  border-radius: 50%;
+  overflow: hidden !important; /* Isse image Chrome mein kabhi bahar nahi bhagegi */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+}
+
+/* 3. Ultimate Cross-Browser Fluid Image Rules */
+.profile-image-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important; /* Fixed Chrome stretch bug */
+  object-fit: cover !important; /* Perfect circle crop */
+  object-position: center top;
+  display: block;
+}
+
+/* 4. Elegant Minimal Hover Effect */
+.hero-card:hover .profile-img-frame {
+  transform: scale(1.03) translateY(-2px);
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.06), 
+    0 0 35px rgba(255, 255, 255, 0.95);
+}
+
+/* Mobile Screens ke liye scale-down handler */
+@media (max-width: 720px) {
+  .profile-img-frame {
+    width: 165px; 
+    height: 165px;
+    margin-bottom: 20px;
+  }
+}
