@@ -163,6 +163,7 @@
     </svg>
   </a>
 
+ <!-- ⚡ REFRESH BLOCKER & EMAILJS SYNC PATCH -->
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
       const formEl = document.getElementById("contactForm");
@@ -175,11 +176,13 @@
           // Strict Validation Engine (6,7,8,9 start match check)
           if (!/^[6-9]\d{9}$/.test(mobVal)) {
             e.preventDefault();
-            e.stopPropagation();
+            e.stopPropagation(); // EmailJS ko trigger hone se rokega
             if (mobError) {
               mobError.textContent = "Mobile number must be exactly 10 digits and start with 6, 7, 8, or 9.";
             }
             return false;
+          } else {
+            if (mobError) mobError.textContent = ""; // Sahi hone par error saaf
           }
         });
       }
@@ -195,4 +198,4 @@
 
   <script src="script.js"></script>
 </body>
-</html>
+</html> 
