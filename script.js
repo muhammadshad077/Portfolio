@@ -26,9 +26,13 @@ let characterIndex = 0;
 let isDeleting = false;
 let testimonialIndex = 0;
 
+// SAFE PRELOADER CONTROLLER
 window.addEventListener("load", () => {
-  if (!loader) return;
-  setTimeout(() => { loader.classList.add("hide"); }, 600);
+  if (loader) {
+    setTimeout(() => { 
+      loader.classList.add("hide"); 
+    }, 400);
+  }
 });
 
 if (navToggle && navLinks) {
@@ -73,19 +77,21 @@ function typeLoop() {
   setTimeout(typeLoop, isDeleting ? 45 : 78);
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const filterValue = button.dataset.filter;
-    filterButtons.forEach((btn) => btn.classList.remove("active"));
-    button.classList.add("active");
-    projectCards.forEach((card) => {
-      const shouldShow = filterValue === "all" || card.dataset.category === filterValue;
-      card.classList.toggle("hide", !shouldShow);
+if (filterButtons.length > 0) {
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filterValue = button.dataset.filter;
+      filterButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      projectCards.forEach((card) => {
+        const shouldShow = filterValue === "all" || card.dataset.category === filterValue;
+        card.classList.toggle("hide", !shouldShow);
+      });
     });
   });
-});
+}
 
-if ("IntersectionObserver" in window) {
+if ("IntersectionObserver" in window && revealItems.length > 0) {
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -95,17 +101,18 @@ if ("IntersectionObserver" in window) {
     });
   }, { threshold: 0.16 });
   revealItems.forEach((item) => revealObserver.observe(item));
+} else {
+  revealItems.forEach((item) => item.classList.add("active"));
 }
 
 function toggleOtherProjectField() {
   if (!projectType || !otherProjectGroup || !otherProject) return;
   const isOther = projectType.value === "Other";
-  otherProjectGroup.classList.toggle("show", isOther);
+  otherProjectGroup.style.display = isOther ? "block" : "none";
   otherProject.required = isOther;
 }
 
 function validateForm(event) {
-  // 1. Sabse pehle form reload event ko completely block karo
   event.preventDefault(); 
 
   const name = document.getElementById("name");
@@ -117,22 +124,21 @@ function validateForm(event) {
   const errors = { nameError: "", emailError: "", mobileError: "", projectTypeError: "", otherProjectError: "", messageError: "" };
   let isValid = true;
 
-  if (!name.value.trim()) { errors.nameError = "Name is required."; isValid = false; }
-  if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { errors.emailError = "Enter a valid email."; isValid = false; }
-  if (!mobile.value.trim() || !/^\d{10}$/.test(mobile.value.trim())) { errors.mobileError = "Enter 10 digit mobile number."; isValid = false; }
+  if (name && !name.value.trim()) { errors.nameError = "Name is required."; isValid = false; }
+  if (email && (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()))) { errors.emailError = "Enter a valid email."; isValid = false; }
+  if (mobile && (!mobile.value.trim() || !/^\d{10}$/.test(mobile.value.trim()))) { errors.mobileError = "Enter 10 digit mobile number."; isValid = false; }
   if (projectType && !projectType.value) { errors.projectTypeError = "Select your project type."; isValid = false; }
-  if (!message.value.trim()) { errors.messageError = "Message is required."; isValid = false; }
+  if (message && !message.value.trim()) { errors.messageError = "Message is required."; isValid = false; }
 
   Object.keys(errors).forEach((key) => {
     const errorElement = document.getElementById(key);
     if (errorElement) errorElement.textContent = errors[key];
   });
 
-  if (isValid) {
+  if (isValid && successMessage && contactForm) {
     successMessage.style.color = "#6366f1";
     successMessage.textContent = "Sending message... Please wait.";
 
-    // SILENT BACKGROUND SUBMISSION (BINA PAGE RELOAD KIYE)
     emailjs.sendForm('service_4f2ilve', 'contact_us', contactForm)
       .then(() => {
           successMessage.style.color = "#00ff88";
