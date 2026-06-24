@@ -19,13 +19,13 @@
         </span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+   <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <ul class="nav-links" id="navLinks">
+  <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
@@ -33,11 +33,11 @@
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="pricing.html">Pricing</a></li>
         <li><a class="active" href="contact.html">Contact</a></li>
-      </ul>
+ </ul>
 
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch dark or light mode">
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch dark or light mode">
         <span class="theme-icon">Dark</span>
-      </button>
+   </button>
     </nav>
   </header>
 
@@ -48,7 +48,7 @@
         <h2>Let us discuss your project.</h2>
       </div>
 
-      <div class="contact-grid">
+<div class="contact-grid">
         <aside class="contact-info">
           <h3>Ready to build something valuable?</h3>
           <p>I usually respond within 24 hours.</p>
@@ -56,25 +56,38 @@
           <a href="tel:+917385302530">+91 7385302530</a>
         </aside>
 
-        <form class="contact-form" id="contactForm">
-          <div class="form-group">
+ <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          
+   <input type="hidden" name="access_key" value="ffa5acdd-e0c9-4b02-8612-92288a6120f9">
+          <input type="hidden" name="redirect" value="https://web3forms.com/success">
+
+   <div class="form-group">
             <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
-            <small class="error-message" id="nameError" style="color: #ff3333; font-weight: bold;"></small>
+            <input type="text" id="name" name="name" required placeholder="Enter your name">
           </div>
-          <div class="form-group">
+
+   <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email">
-            <small class="error-message" id="emailError" style="color: #ff3333; font-weight: bold;"></small>
-          </div>
-          <div class="form-group">
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+  
+  </div>
+
+  <div class="form-group">
             <label for="mobile">Mobile Number</label>
-            <input type="tel" id="mobile" name="mobile" placeholder="10 digit mobile number">
-            <small class="error-message" id="mobileError" style="color: #ff3333; font-weight: bold;"></small>
-          </div>
-          <div class="form-group">
+            <input 
+              type="tel" 
+              id="mobile" 
+              name="mobile" 
+              required 
+              pattern="[6-9][0-9]{9}" 
+              title="Mobile number must be exactly 10 digits and start with 6, 7, 8, or 9." 
+              placeholder="10 digit mobile number"
+            >
+   </div>
+
+  <div class="form-group">
             <label for="projectType">Project Type</label>
-            <select id="projectType" name="projectType">
+            <select id="projectType" name="projectType" required>
               <option value="">Select Your Project Type</option>
               <option>Business Website</option>
               <option>Portfolio Website</option>
@@ -82,19 +95,14 @@
               <option>Full Stack Web Application</option>
               <option>Other</option>
             </select>
-            <small class="error-message" id="projectTypeError" style="color: #ff3333; font-weight: bold;"></small>
           </div>
-          <div class="form-group other-project-group" id="otherProjectGroup" style="display: none;">
-            <label for="otherProject">Please describe your project</label>
-            <input type="text" id="otherProject" name="otherProject" placeholder="Briefly describe your project">
-          </div>
-          <div class="form-group">
+
+   <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project"></textarea>
-            <small class="error-message" id="messageError" style="color: #ff3333; font-weight: bold;"></small>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project"></textarea>
           </div>
-          <button class="btn btn-primary form-submit" type="submit">Send Message</button>
-          <p class="success-message" id="successMessage" role="status" style="margin-top: 15px; font-weight: bold;"></p>
+
+   <button class="btn btn-primary form-submit" type="submit">Send Message</button>
         </form>
       </div>
     </section>
@@ -103,13 +111,6 @@
   <footer class="footer">
     <p class="copyright">&copy; 2026 Muhammad Shad. All rights reserved.</p>
   </footer>
-
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript">
-     (function(){
-        emailjs.init("3nhYzXLZN4Ljnj6Hm"); 
-     })();
-  </script>
 
   <script src="script.js"></script>
 </body>
