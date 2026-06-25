@@ -274,4 +274,6 @@ if (backToTopBtn) {
       behavior: "smooth"
     });
   });
-}
+}// ⚡ EMAILJS ACCOUNT INITIALIZATION (FORCING PUBLIC KEY CONNECT)
+// Note: Is double quotes ke andar apni actual EmailJS Public Key daal dena bhai!
+emailjs.init("3nhYzXLZN4Ljnj6Hm");
