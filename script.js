@@ -105,6 +105,7 @@ if (contactForm) {
 }
 
 applySavedTheme();
+emailjs.init("3nhYzXLZN4Ljnj6Hm"); // EmailJS initialization with your public key
 
 // ==========================================
 // ⚡ TYPEWRITER ENGINE WITH VISIBILITY FIX
