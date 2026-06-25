@@ -44,15 +44,17 @@ if (projectType) {
 
 if (contactForm) {
   contactForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Kisi bhi haal mein page reload hone se rokna hai
+    event.preventDefault(); // Page reload block karne ke liye
 
     const name = document.getElementById("name");
     const email = document.getElementById("email");
     const mobile = document.getElementById("mobile");
+    const projectType = document.getElementById("projectType");
+    const otherProject = document.getElementById("otherProject");
     const message = document.getElementById("message");
     const successMessage = document.getElementById("successMessage");
 
-    // Clean error displays before checking
+    // Clear error logs before execution
     document.getElementById("nameError").textContent = "";
     document.getElementById("emailError").textContent = "";
     document.getElementById("mobileError").textContent = "";
@@ -65,7 +67,6 @@ if (contactForm) {
     if (!name || !name.value.trim()) { document.getElementById("nameError").textContent = "Name is required."; isValid = false; }
     if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { document.getElementById("emailError").textContent = "Enter a valid email."; isValid = false; }
     
-    // Strict Input Filter for Indian standard numbers starting ONLY with 6,7,8,9
     const mobileValue = mobile ? mobile.value.trim() : "";
     if (!mobileValue || !/^[6-9]\d{9}$/.test(mobileValue)) { 
       document.getElementById("mobileError").textContent = "Mobile number must be 10 digits and start with 6, 7, 8, or 9."; 
@@ -81,8 +82,18 @@ if (contactForm) {
         successMessage.textContent = "Sending message... Please wait.";
       }
 
-      // Live Execution to trigger verification layer
-      emailjs.sendForm('service_4f2ilve', 'contact_us', this)
+      // ⚡ STABLE EXECUTION: Explicit Object parameters targeting EmailJS variables directly
+      const templateParams = {
+        name: name.value.trim(),
+        email: email.value.trim(),
+        mobile: mobileValue,
+        projectType: projectType.value,
+        otherProject: otherProject ? otherProject.value.trim() : "",
+        message: message.value.trim()
+      };
+
+      // emailjs.sendForm ki jagah send use kiya hai jo crash payload fix karta hai
+      emailjs.send('service_4f2ilve', 'contact_us', templateParams)
         .then(() => {
             alert("✔ Thank you! Your message has been sent successfully.");
             if (successMessage) {
@@ -90,19 +101,20 @@ if (contactForm) {
               successMessage.textContent = "✔ Message sent successfully!";
             }
             contactForm.reset();
-            toggleOtherProjectField();
+            if (typeof toggleOtherProjectField === "function") toggleOtherProjectField();
         })
         .catch((error) => {
-            alert("❌ Failed to send message. Please try again.");
+            alert("❌ Failed to send message. Please check EmailJS dashboard config.");
             if (successMessage) {
               successMessage.style.color = "#ff3333";
               successMessage.textContent = "❌ Failed to send message.";
             }
-            console.log('EmailJS Error:', error);
+            console.log('EmailJS Payload Error:', error);
         });
     }
   });
 }
+
 
 applySavedTheme();
 emailjs.init("3nhYzXLZN4Ljnj6Hm"); // EmailJS initialization with your public key
