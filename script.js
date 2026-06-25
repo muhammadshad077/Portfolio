@@ -76,24 +76,47 @@ if (contactForm) {
     if (projectType && !projectType.value) { document.getElementById("projectTypeError").textContent = "Select your project type."; isValid = false; }
     if (!message || !message.value.trim()) { document.getElementById("messageError").textContent = "Message is required."; isValid = false; }
 
+    if (contactForm) {
+  contactForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Page reload rokne ke liye
+
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const mobile = document.getElementById("mobile");
+    const message = document.getElementById("message");
+    const successMessage = document.getElementById("successMessage");
+
+    // Purane errors ko saaf karne ke liye
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("mobileError").textContent = "";
+    document.getElementById("projectTypeError").textContent = "";
+    document.getElementById("messageError").textContent = "";
+    if (successMessage) successMessage.textContent = "";
+
+    let isValid = true;
+
+    if (!name || !name.value.trim()) { document.getElementById("nameError").textContent = "Name is required."; isValid = false; }
+    if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { document.getElementById("emailError").textContent = "Enter a valid email."; isValid = false; }
+    
+    const mobileValue = mobile ? mobile.value.trim() : "";
+    if (!mobileValue || !/^[6-9]\d{9}$/.test(mobileValue)) { 
+      document.getElementById("mobileError").textContent = "Mobile number must be 10 digits and start with 6, 7, 8, or 9."; 
+      isValid = false; 
+    }
+    
+    if (projectType && !projectType.value) { document.getElementById("projectTypeError").textContent = "Select your project type."; isValid = false; }
+    if (!message || !message.value.trim()) { document.getElementById("messageError").textContent = "Message is required."; isValid = false; }
+
     if (isValid) {
       if (successMessage) {
         successMessage.style.color = "#6366f1";
         successMessage.textContent = "Sending message... Please wait.";
       }
 
-      // ⚡ STABLE EXECUTION: Explicit Object parameters targeting EmailJS variables directly
-      const templateParams = {
-        name: name.value.trim(),
-        email: email.value.trim(),
-        mobile: mobileValue,
-        projectType: projectType.value,
-        otherProject: otherProject ? otherProject.value.trim() : "",
-        message: message.value.trim()
-      };
-
-      // emailjs.sendForm ki jagah send use kiya hai jo crash payload fix karta hai
-      emailjs.send('service_4f2ilve', 'contact_us', templateParams)
+      // ⚡ DIRECT HANDSHAKE: Form selector call with explicit inline key pass
+      // Note: Apni actual Public Key ko teesre parameter ke baad chauthe box "" me likh dena
+      emailjs.sendForm('service_4f2ilve', 'contact_us', this, '3nhYzXLZN4Ljnj6Hm')
         .then(() => {
             alert("✔ Thank you! Your message has been sent successfully.");
             if (successMessage) {
@@ -104,16 +127,17 @@ if (contactForm) {
             if (typeof toggleOtherProjectField === "function") toggleOtherProjectField();
         })
         .catch((error) => {
-            alert("❌ Failed to send message. Please check EmailJS dashboard config.");
+            alert("❌ Failed to send message. Please verify your inline API key configuration.");
             if (successMessage) {
               successMessage.style.color = "#ff3333";
               successMessage.textContent = "❌ Failed to send message.";
             }
-            console.log('EmailJS Payload Error:', error);
+            console.log('EmailJS Final Fail Log:', error);
         });
     }
   });
 }
+
 
 
 applySavedTheme();
