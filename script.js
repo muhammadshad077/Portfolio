@@ -106,24 +106,57 @@ if (contactForm) {
 
 applySavedTheme();
 
-document.addEventListener("DOMContentLoaded", () => {
+// ⚡ INFALLIBLE LOOPS TYPEWRITER ENGINE (ALWAYS RUNS ON VISIBILITY CHANGES)
+function initTypewriter() {
   const typingSpan = document.getElementById("typingText");
   if (!typingSpan) return;
 
-  const roles = ["Full Stack Developer", "Freelancer", "Problem Solver"];
-  
-  // 📝 Aapko aage jo bhi aur text jorna hai, wo is double quotes ke andar likh do:
-  const extraText = " | Web Developer | Software Engineer  "; 
-  
-  const finalFullSentence = roles.join(" | ") + extraText;
-  let charIndex = 0;
+  // Agar animation pehle se chal rahi hai toh purani interval ko clear karega taaki duplicate na ho
+  if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
-  function type() {
-    if (charIndex < finalFullSentence.length) {
-      typingSpan.textContent += finalFullSentence.charAt(charIndex);
+  // Aapki dono distinct lines jo ek ke baad ek full-text switch hongi
+  const lines = [
+    "Full Stack Developer | Freelancer | Problem Solver",
+    "Software Engineer | Web Developer"
+  ];
+
+  let lineIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeCycle() {
+    // Current element check, agar DOM update hua toh reference loose nahi karega
+    const liveSpan = document.getElementById("typingText");
+    if (!liveSpan) return;
+
+    const currentLine = lines[lineIndex];
+
+    if (isDeleting) {
+      liveSpan.textContent = currentLine.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      liveSpan.textContent = currentLine.substring(0, charIndex + 1);
       charIndex++;
-      setTimeout(type, 80); // Typing speed controller
     }
+
+    let nextSpeed = isDeleting ? 40 : 80; // Deleting fast hogi, typing normal
+
+    if (!isDeleting && charIndex === currentLine.length) {
+      nextSpeed = 2000; // Poori line likhne ke baad 2 second rukega
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      lineIndex = (lineIndex + 1) % lines.length; // Dusri line par switch karega
+      nextSpeed = 400; // Nayi line shuru hone se pehle pause
+    }
+
+    window.typewriterTimeout = setTimeout(typeCycle, nextSpeed);
   }
-  setTimeout(type, 500);
-});
+
+  typeCycle();
+}
+
+// 🌐 Fail-safe triggers: Jab page load ho, scroll ho, ya section badle, ye animation chalu rakhega
+document.addEventListener("DOMContentLoaded", initTypewriter);
+window.addEventListener("hashchange", initTypewriter);
+window.addEventListener("pageshow", initTypewriter);
