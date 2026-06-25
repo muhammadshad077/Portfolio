@@ -110,11 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const typingSpan = document.getElementById("typingText");
   if (!typingSpan) return;
 
-  const roles = [
-    "Full Stack Developer ",
-    "Freelancer ",
-    "Problem Solver "
-  ];
+  const roles = ["Full Stack Developer", "Freelancer", "Problem Solver"];
   
   let roleIndex = 0;
   let charIndex = 0;
