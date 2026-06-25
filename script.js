@@ -106,32 +106,37 @@ if (contactForm) {
 
 applySavedTheme();
 
-// =====================================================================
-// ⚡ FIX ENGINE: MULTI-PAGE LOOPS + VERIFIED DATA MATRIX INJECTION ONLY
-// =====================================================================
+// ==========================================
+// ⚡ TYPEWRITER ENGINE WITH VISIBILITY FIX
+// ==========================================
 
-// 📝 1. TYPEWRITER ANIMATION LOGIC (For Home Header Text)
+// Ye function typewriter animation ko handle karta hai
 function initTypewriter() {
+  // HTML se typingText element ko dhoond raha hai
   const typingSpan = document.getElementById("typingText");
-  if (!typingSpan) return; // Agar index page nahi hai toh crash block karega
+  if (!typingSpan) return; // Agar element nahi mila (jaise dusre pages par) toh ruk jayega
 
+  // Purane chalte hue timeout ko clear karega taaki code double na chale
   if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
+  // Aapki dono lines jo bari-bari se type hongi
   const lines = [
     "Full Stack Developer | Freelancer | Problem Solver",
     "Software Engineer | Web Developer"
   ];
 
-  let lineIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
+  let lineIndex = 0; // Kaun si line chal rahi hai
+  let charIndex = 0; // Kaun sa akshar type ho raha hai
+  let isDeleting = false; // Mita raha hai ya type kar raha hai
 
+  // Ye loop har ek akshar ko type aur delete karta hai
   function typeCycle() {
     const liveSpan = document.getElementById("typingText");
     if (!liveSpan) return;
 
     const currentLine = lines[lineIndex];
 
+    // Agar mita raha hai toh ek akshar kam karega, nahi toh ek badhayega
     if (isDeleting) {
       liveSpan.textContent = currentLine.substring(0, charIndex - 1);
       charIndex--;
@@ -140,15 +145,19 @@ function initTypewriter() {
       charIndex++;
     }
 
+    // Mitane ki speed fast (40ms) aur likhne ki normal (80ms) hogi
     let nextSpeed = isDeleting ? 40 : 80;
 
+    // Agar poori line likh gayi toh 2 second rukega aur mitana shuru karega
     if (!isDeleting && charIndex === currentLine.length) {
       nextSpeed = 2000;
       isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
+    } 
+    // Agar poori line mit gayi toh dusri line par switch karega
+    else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       lineIndex = (lineIndex + 1) % lines.length;
-      nextSpeed = 400;
+      nextSpeed = 400; // Nayi line shuru hone se pehle chota pause
     }
 
     window.typewriterTimeout = setTimeout(typeCycle, nextSpeed);
@@ -157,50 +166,24 @@ function initTypewriter() {
   typeCycle();
 }
 
-// 📝 2. AUTO-SLIDE REVIEWS SLIDER LOGIC (With Your Verified 3 Reviews Data)
+// ==========================================
+// 🔄 REVIEWS SLIDER INITIALIZATION ENGINE
+// ==========================================
+
+// Ye function reviews ko auto-slide aur dots ko handle karta hai
 function initReviewsSlider() {
   const track = document.getElementById("testimonialTrack");
   const dotsContainer = document.getElementById("sliderDots");
-  if (!track || !dotsContainer) return;
+  if (!track || !dotsContainer) return; // Agar elements nahi hain toh ruk jayega
 
   const cards = Array.from(track.children);
   if (cards.length === 0) return;
 
-  dotsContainer.innerHTML = ""; // Duplicate dots hone se rokega
+  dotsContainer.innerHTML = ""; // Purane dots saaf karega taaki duplicate na hon
   let currentIndex = 0;
 
-  // Aapke teeno validated reviews ka data matrix engine
-  const reviewsData = [
-    {
-      text: '"The website looked professional, loaded fast, and helped us present our business with confidence."',
-      name: "Priya Sharma",
-      role: "Startup Founder"
-    },
-    {
-      text: '"Clear communication, clean design, and excellent attention to responsive details across devices."',
-      name: "Arjun Mehta",
-      role: "Marketing Consultant"
-    },
-    {
-      text: '"Delivered exactly what we needed for our freelance project and made the process easy."',
-      name: "Neha Rao",
-      role: "Small Business Owner"
-    }
-  ];
-
-  // Niche active dots buttons generate karne ke liye loop
-  cards.forEach((card, index) => {
-    // Agar HTML elements safe hain toh dynamic text injection apply karega
-    if (reviewsData[index]) {
-      const textEl = card.querySelector("p");
-      const nameEl = card.querySelector("strong");
-      const roleEl = card.querySelector("span");
-      
-      if (textEl) textEl.textContent = reviewsData[index].text;
-      if (nameEl) nameEl.textContent = reviewsData[index].name;
-      if (roleEl) roleEl.textContent = reviewsData[index].role;
-    }
-
+  // Har ek review card ke liye ek niche dot button banayega
+  cards.forEach((_, index) => {
     const dot = document.createElement("button");
     dot.type = "button";
     dot.classList.add("slider-dot");
@@ -208,6 +191,7 @@ function initReviewsSlider() {
     dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
     dotsContainer.appendChild(dot);
 
+    // Dot click karne par usi slide par le jayega
     dot.addEventListener("click", () => {
       goToSlide(index);
     });
@@ -215,7 +199,7 @@ function initReviewsSlider() {
 
   const dots = Array.from(dotsContainer.children);
 
-  // Layout translate engine review panel ko right-left transform karne ke liye
+  // Slide ko move karne ka function
   function goToSlide(index) {
     currentIndex = index;
     const amountToMove = -currentIndex * 100;
@@ -225,7 +209,7 @@ function initReviewsSlider() {
     if (dots[currentIndex]) dots[currentIndex].classList.add("active");
   }
 
-  // CONTINUOUS LOOP ENGINE: Har 5 second mein apne aap image lines switch hoti rahengi
+  // Har 5 second mein reviews automatic badal jayenge
   if (window.reviewInterval) clearInterval(window.reviewInterval);
   window.reviewInterval = setInterval(() => {
     let nextIndex = (currentIndex + 1) % cards.length;
@@ -233,25 +217,26 @@ function initReviewsSlider() {
   }, 5000);
 }
 
-// Dono features ko ek sath parallel sync par run karne wala common trigger
 function runPortfolioFeatures() {
   initTypewriter();
   initReviewsSlider();
 }
 
-// =====================================================================
-// 🌐 GLOBAL EVENTS: JAB BHI PAGE SWITCH HOGA YE FOREVER CHALTA RAHEGA
-// =====================================================================
+// ==========================================
+// 🌐 FAIL-SAFE GLOBAL EVENT LISTENERS
+// ==========================================
+
+// 1. Jab poora HTML page load ho tab chalao
 document.addEventListener("DOMContentLoaded", runPortfolioFeatures);
+
+// 2. Jab section hash badle (#home, #about) tab chalao
 window.addEventListener("hashchange", runPortfolioFeatures);
+
+// 3. Jab dusre page se wapas back/forward karke aayein tab chalao
 window.addEventListener("pageshow", runPortfolioFeatures);
 
-// CROSS-PAGE REDIRECT GUARD: Jab koi link daba kar wapas index/home context par load hoga
+// 4. FIX: Jab kisi bhi link par click ho (jaise dusre page se index.html pe aane ke liye), toh typewriter ko check karega
 window.addEventListener("click", () => {
-  setTimeout(() => {
-    const track = document.getElementById("testimonialTrack");
-    if (track && !window.reviewInterval) {
-      runPortfolioFeatures();
-    }
-  }, 100);
+  // Chote se delay ke baad run kareim taaki naya DOM element mil sake
+  setTimeout(initTypewriter, 100);
 });
