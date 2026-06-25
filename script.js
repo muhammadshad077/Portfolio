@@ -105,3 +105,46 @@ if (contactForm) {
 }
 
 applySavedTheme();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const typingSpan = document.getElementById("typingText");
+  if (!typingSpan) return;
+
+  const roles = [
+    "Full Stack Developer ",
+    "Freelancer ",
+    "Problem Solver "
+  ];
+  
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+
+  function type() {
+    const currentRole = roles[roleIndex];
+    
+    if (isDeleting) {
+      typingSpan.textContent = currentRole.substring(0, charIndex - 1);
+      charIndex--;
+      typeSpeed = 40;
+    } else {
+      typingSpan.textContent = currentRole.substring(0, charIndex + 1);
+      charIndex++;
+      typeSpeed = 100;
+    }
+
+    if (!isDeleting && charIndex === currentRole.length) {
+      typeSpeed = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      typeSpeed = 400;
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  setTimeout(type, 500);
+});
