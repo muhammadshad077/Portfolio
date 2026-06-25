@@ -1672,3 +1672,30 @@ header.site-header .brand-logo img {
   visibility: visible !important;
   transform: none !important;
 }
+
+/* ⚡ FLOATING BACK TO TOP BUTTON */
+.back-to-top {
+  position: fixed;
+  bottom: 90px; /* WhatsApp float ke thoda upar set kiya hai */
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #0e7c66; /* Exact matching green color */
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  display: none; /* Shuru mein chhupa rahega, scroll par dikhega */
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: #060813; /* Hover par dark theme matching */
+  transform: scale(1.05);
+}

@@ -240,3 +240,25 @@ window.addEventListener("click", () => {
   // Chote se delay ke baad run kareim taaki naya DOM element mil sake
   setTimeout(initTypewriter, 100);
 });
+
+// ⚡ SCROLL ENGINE FOR BACK TO TOP BUTTON
+const backToTopBtn = document.getElementById("backToTop");
+
+if (backToTopBtn) {
+  // Jab user 300px niche scroll karega toh button dikhega, nahi toh chhup jayega
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.display = "flex";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  // Click karne par smoothly sabse upar scroll karne ke liye
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
