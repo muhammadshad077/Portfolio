@@ -107,13 +107,13 @@ if (contactForm) {
 applySavedTheme();
 
 // =====================================================================
-// ⚡ FIX ENGINE: TYPEWRITER + AUTOMATIC REVIEWS SLIDER ONLY
+// ⚡ FIX ENGINE: MULTI-PAGE LOOPS + VERIFIED DATA MATRIX INJECTION ONLY
 // =====================================================================
 
 // 📝 1. TYPEWRITER ANIMATION LOGIC (For Home Header Text)
 function initTypewriter() {
   const typingSpan = document.getElementById("typingText");
-  if (!typingSpan) return;
+  if (!typingSpan) return; // Agar index page nahi hai toh crash block karega
 
   if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
@@ -157,22 +157,50 @@ function initTypewriter() {
   typeCycle();
 }
 
-// 📝 2. AUTO-SLIDE REVIEWS SLIDER LOGIC (Har 3 Lines Mein Alag Review Slide Hoga)
+// 📝 2. AUTO-SLIDE REVIEWS SLIDER LOGIC (With Your Verified 3 Reviews Data)
 function initReviewsSlider() {
-  // Slider track aur dots container ko dhoond raha hai
   const track = document.getElementById("testimonialTrack");
   const dotsContainer = document.getElementById("sliderDots");
   if (!track || !dotsContainer) return;
 
-  // Track ke andar ke saare review cards ko array mein le rha hai
   const cards = Array.from(track.children);
   if (cards.length === 0) return;
 
-  dotsContainer.innerHTML = ""; // Purane dots saaf karega taaki duplicate na hon
+  dotsContainer.innerHTML = ""; // Duplicate dots hone se rokega
   let currentIndex = 0;
 
-  // Har ek review card ke liye niche dot button generate karega
-  cards.forEach((_, index) => {
+  // Aapke teeno validated reviews ka data matrix engine
+  const reviewsData = [
+    {
+      text: '"The website looked professional, loaded fast, and helped us present our business with confidence."',
+      name: "Priya Sharma",
+      role: "Startup Founder"
+    },
+    {
+      text: '"Clear communication, clean design, and excellent attention to responsive details across devices."',
+      name: "Arjun Mehta",
+      role: "Marketing Consultant"
+    },
+    {
+      text: '"Delivered exactly what we needed for our freelance project and made the process easy."',
+      name: "Neha Rao",
+      role: "Small Business Owner"
+    }
+  ];
+
+  // Niche active dots buttons generate karne ke liye loop
+  cards.forEach((card, index) => {
+    // Agar HTML elements safe hain toh dynamic text injection apply karega
+    if (reviewsData[index]) {
+      const textEl = card.querySelector("p");
+      const nameEl = card.querySelector("strong");
+      const roleEl = card.querySelector("span");
+      
+      if (textEl) textEl.textContent = reviewsData[index].text;
+      if (nameEl) nameEl.textContent = reviewsData[index].name;
+      if (roleEl) roleEl.textContent = reviewsData[index].role;
+    }
+
     const dot = document.createElement("button");
     dot.type = "button";
     dot.classList.add("slider-dot");
@@ -180,7 +208,6 @@ function initReviewsSlider() {
     dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
     dotsContainer.appendChild(dot);
 
-    // Dot click karne par slide wahan move ho jayegi
     dot.addEventListener("click", () => {
       goToSlide(index);
     });
@@ -188,18 +215,17 @@ function initReviewsSlider() {
 
   const dots = Array.from(dotsContainer.children);
 
-  // Slide ko moving effect dene wala animation logic
+  // Layout translate engine review panel ko right-left transform karne ke liye
   function goToSlide(index) {
     currentIndex = index;
     const amountToMove = -currentIndex * 100;
     track.style.transform = `translateX(${amountToMove}%)`;
     
-    // Active dot ka color badalne ke liye
     dots.forEach(d => d.classList.remove("active"));
     if (dots[currentIndex]) dots[currentIndex].classList.add("active");
   }
 
-  // 🔄 AUTO ANIMATION PLAY: Har 5 second mein apne aap review lines change hongi
+  // CONTINUOUS LOOP ENGINE: Har 5 second mein apne aap image lines switch hoti rahengi
   if (window.reviewInterval) clearInterval(window.reviewInterval);
   window.reviewInterval = setInterval(() => {
     let nextIndex = (currentIndex + 1) % cards.length;
@@ -207,30 +233,23 @@ function initReviewsSlider() {
   }, 5000);
 }
 
-// Dono features ko load aur chalu rakhne ka ek combined function
+// Dono features ko ek sath parallel sync par run karne wala common trigger
 function runPortfolioFeatures() {
   initTypewriter();
   initReviewsSlider();
 }
 
 // =====================================================================
-// 🌐 GLOBAL TRIGGERS (FOR CONTINUOUS RUNNING ON CROSS-PAGE NAVIGATION)
+// 🌐 GLOBAL EVENTS: JAB BHI PAGE SWITCH HOGA YE FOREVER CHALTA RAHEGA
 // =====================================================================
-
-// Page load hone par dono features chalu karein
 document.addEventListener("DOMContentLoaded", runPortfolioFeatures);
-
-// Same page par tabs/sections badalne par (#home, #about) active rakhein
 window.addEventListener("hashchange", runPortfolioFeatures);
-
-// Browser history ya back/forward button se aane par bhi active rakhein
 window.addEventListener("pageshow", runPortfolioFeatures);
 
-// CROSS-PAGE NAVIGATION FIX: Dusre page se seedha click karke Home par aane par automatically chalega
+// CROSS-PAGE REDIRECT GUARD: Jab koi link daba kar wapas index/home context par load hoga
 window.addEventListener("click", () => {
   setTimeout(() => {
     const track = document.getElementById("testimonialTrack");
-    // Agar home page ka review track dikh raha hai aur automatic sliding stopped hai, toh restart karega
     if (track && !window.reviewInterval) {
       runPortfolioFeatures();
     }
