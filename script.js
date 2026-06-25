@@ -112,35 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const roles = ["Full Stack Developer", "Freelancer", "Problem Solver"];
   
-  let roleIndex = 0;
+  // 📝 Aapko aage jo bhi aur text jorna hai, wo is double quotes ke andar likh do:
+  const extraText = " | Web Developer | Software Engineer  "; 
+  
+  const finalFullSentence = roles.join(" | ") + extraText;
   let charIndex = 0;
-  let isDeleting = false;
-  let typeSpeed = 100;
 
   function type() {
-    const currentRole = roles[roleIndex];
-    
-    if (isDeleting) {
-      typingSpan.textContent = currentRole.substring(0, charIndex - 1);
-      charIndex--;
-      typeSpeed = 40;
-    } else {
-      typingSpan.textContent = currentRole.substring(0, charIndex + 1);
+    if (charIndex < finalFullSentence.length) {
+      typingSpan.textContent += finalFullSentence.charAt(charIndex);
       charIndex++;
-      typeSpeed = 100;
+      setTimeout(type, 80); // Typing speed controller
     }
-
-    if (!isDeleting && charIndex === currentRole.length) {
-      typeSpeed = 2000;
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-      typeSpeed = 400;
-    }
-
-    setTimeout(type, typeSpeed);
   }
-
   setTimeout(type, 500);
 });
