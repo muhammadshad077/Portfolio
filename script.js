@@ -106,28 +106,37 @@ if (contactForm) {
 
 applySavedTheme();
 
-// ⚡ FIXED: TYPEWRITER + REVIEWS SLIDER LOGIC ONLY
-function initTypewriter() {
-  const typingSpan = document.getElementById("typingText");
-  if (!typingSpan) return;
+// ==========================================
+// ⚡ TYPEWRITER ENGINE WITH VISIBILITY FIX
+// ==========================================
 
+// Ye function typewriter animation ko handle karta hai
+function initTypewriter() {
+  // HTML se typingText element ko dhoond raha hai
+  const typingSpan = document.getElementById("typingText");
+  if (!typingSpan) return; // Agar element nahi mila (jaise dusre pages par) toh ruk jayega
+
+  // Purane chalte hue timeout ko clear karega taaki code double na chale
   if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
+  // Aapki dono lines jo bari-bari se type hongi
   const lines = [
     "Full Stack Developer | Freelancer | Problem Solver",
     "Software Engineer | Web Developer"
   ];
 
-  let lineIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
+  let lineIndex = 0; // Kaun si line chal rahi hai
+  let charIndex = 0; // Kaun sa akshar type ho raha hai
+  let isDeleting = false; // Mita raha hai ya type kar raha hai
 
+  // Ye loop har ek akshar ko type aur delete karta hai
   function typeCycle() {
     const liveSpan = document.getElementById("typingText");
     if (!liveSpan) return;
 
     const currentLine = lines[lineIndex];
 
+    // Agar mita raha hai toh ek akshar kam karega, nahi toh ek badhayega
     if (isDeleting) {
       liveSpan.textContent = currentLine.substring(0, charIndex - 1);
       charIndex--;
@@ -136,15 +145,19 @@ function initTypewriter() {
       charIndex++;
     }
 
+    // Mitane ki speed fast (40ms) aur likhne ki normal (80ms) hogi
     let nextSpeed = isDeleting ? 40 : 80;
 
+    // Agar poori line likh gayi toh 2 second rukega aur mitana shuru karega
     if (!isDeleting && charIndex === currentLine.length) {
       nextSpeed = 2000;
       isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
+    } 
+    // Agar poori line mit gayi toh dusri line par switch karega
+    else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       lineIndex = (lineIndex + 1) % lines.length;
-      nextSpeed = 400;
+      nextSpeed = 400; // Nayi line shuru hone se pehle chota pause
     }
 
     window.typewriterTimeout = setTimeout(typeCycle, nextSpeed);
@@ -153,20 +166,23 @@ function initTypewriter() {
   typeCycle();
 }
 
+// ==========================================
 // 🔄 REVIEWS SLIDER INITIALIZATION ENGINE
+// ==========================================
+
+// Ye function reviews ko auto-slide aur dots ko handle karta hai
 function initReviewsSlider() {
   const track = document.getElementById("testimonialTrack");
   const dotsContainer = document.getElementById("sliderDots");
-  if (!track || !dotsContainer) return;
+  if (!track || !dotsContainer) return; // Agar elements nahi hain toh ruk jayega
 
   const cards = Array.from(track.children);
   if (cards.length === 0) return;
 
-  // Purane dots clear karein taaki duplicate na hon
-  dotsContainer.innerHTML = "";
+  dotsContainer.innerHTML = ""; // Purane dots saaf karega taaki duplicate na hon
   let currentIndex = 0;
 
-  // Dynamic dots create karna
+  // Har ek review card ke liye ek niche dot button banayega
   cards.forEach((_, index) => {
     const dot = document.createElement("button");
     dot.type = "button";
@@ -175,6 +191,7 @@ function initReviewsSlider() {
     dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
     dotsContainer.appendChild(dot);
 
+    // Dot click karne par usi slide par le jayega
     dot.addEventListener("click", () => {
       goToSlide(index);
     });
@@ -182,6 +199,7 @@ function initReviewsSlider() {
 
   const dots = Array.from(dotsContainer.children);
 
+  // Slide ko move karne ka function
   function goToSlide(index) {
     currentIndex = index;
     const amountToMove = -currentIndex * 100;
@@ -191,7 +209,7 @@ function initReviewsSlider() {
     if (dots[currentIndex]) dots[currentIndex].classList.add("active");
   }
 
-  // Auto slide engine (Har 5 second me scroll hoga)
+  // Har 5 second mein reviews automatic badal jayenge
   if (window.reviewInterval) clearInterval(window.reviewInterval);
   window.reviewInterval = setInterval(() => {
     let nextIndex = (currentIndex + 1) % cards.length;
@@ -199,12 +217,27 @@ function initReviewsSlider() {
   }, 5000);
 }
 
-// Combined trigger for both systems without breaking anything
+// दोनों फीचर्स को एक साथ लोड करने का कम्बाइंड फंक्शन
 function runPortfolioFeatures() {
   initTypewriter();
   initReviewsSlider();
 }
 
+// ==========================================
+// 🌐 FAIL-SAFE GLOBAL EVENT LISTENERS
+// ==========================================
+
+// 1. Jab poora HTML page load ho tab chalao
 document.addEventListener("DOMContentLoaded", runPortfolioFeatures);
+
+// 2. Jab section hash badle (#home, #about) tab chalao
 window.addEventListener("hashchange", runPortfolioFeatures);
+
+// 3. Jab dusre page se wapas back/forward karke aayein tab chalao
 window.addEventListener("pageshow", runPortfolioFeatures);
+
+// 4. FIX: Jab kisi bhi link par click ho (jaise dusre page se index.html pe aane ke liye), toh typewriter ko check karega
+window.addEventListener("click", () => {
+  // Chote se delay ke baad run kareim taaki naya DOM element mil sake
+  setTimeout(initTypewriter, 100);
+});
