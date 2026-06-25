@@ -106,15 +106,14 @@ if (contactForm) {
 
 applySavedTheme();
 
-// ⚡ INFALLIBLE LOOPS TYPEWRITER ENGINE (ALWAYS RUNS ON VISIBILITY CHANGES)
+// ⚡ FIXED: SCROLL/SECTION SWITCHING RE-TRIGGER ENGINE
 function initTypewriter() {
   const typingSpan = document.getElementById("typingText");
   if (!typingSpan) return;
 
-  // Agar animation pehle se chal rahi hai toh purani interval ko clear karega taaki duplicate na ho
+  // Purani timeout ko clear karega taaki animation double na chale
   if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
-  // Aapki dono distinct lines jo ek ke baad ek full-text switch hongi
   const lines = [
     "Full Stack Developer | Freelancer | Problem Solver",
     "Software Engineer | Web Developer"
@@ -125,7 +124,6 @@ function initTypewriter() {
   let isDeleting = false;
 
   function typeCycle() {
-    // Current element check, agar DOM update hua toh reference loose nahi karega
     const liveSpan = document.getElementById("typingText");
     if (!liveSpan) return;
 
@@ -139,15 +137,15 @@ function initTypewriter() {
       charIndex++;
     }
 
-    let nextSpeed = isDeleting ? 40 : 80; // Deleting fast hogi, typing normal
+    let nextSpeed = isDeleting ? 40 : 80;
 
     if (!isDeleting && charIndex === currentLine.length) {
-      nextSpeed = 2000; // Poori line likhne ke baad 2 second rukega
+      nextSpeed = 2000; // Line poori hone par 2 second rukega
       isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
-      lineIndex = (lineIndex + 1) % lines.length; // Dusri line par switch karega
-      nextSpeed = 400; // Nayi line shuru hone se pehle pause
+      lineIndex = (lineIndex + 1) % lines.length;
+      nextSpeed = 400; // Nayi line shuru hone se pehle chota pause
     }
 
     window.typewriterTimeout = setTimeout(typeCycle, nextSpeed);
@@ -156,7 +154,7 @@ function initTypewriter() {
   typeCycle();
 }
 
-// 🌐 Fail-safe triggers: Jab page load ho, scroll ho, ya section badle, ye animation chalu rakhega
+// JAB BHI SECTION YA PAGE BADLEGA, YE AUTOMATICALLY RESUME KAREGA
 document.addEventListener("DOMContentLoaded", initTypewriter);
 window.addEventListener("hashchange", initTypewriter);
 window.addEventListener("pageshow", initTypewriter);
