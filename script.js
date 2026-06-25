@@ -106,12 +106,11 @@ if (contactForm) {
 
 applySavedTheme();
 
-// ⚡ FIXED: SCROLL/SECTION SWITCHING RE-TRIGGER ENGINE
+// ⚡ FIXED: TYPEWRITER + REVIEWS SLIDER LOGIC ONLY
 function initTypewriter() {
   const typingSpan = document.getElementById("typingText");
   if (!typingSpan) return;
 
-  // Purani timeout ko clear karega taaki animation double na chale
   if (window.typewriterTimeout) clearTimeout(window.typewriterTimeout);
 
   const lines = [
@@ -140,12 +139,12 @@ function initTypewriter() {
     let nextSpeed = isDeleting ? 40 : 80;
 
     if (!isDeleting && charIndex === currentLine.length) {
-      nextSpeed = 2000; // Line poori hone par 2 second rukega
+      nextSpeed = 2000;
       isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       lineIndex = (lineIndex + 1) % lines.length;
-      nextSpeed = 400; // Nayi line shuru hone se pehle chota pause
+      nextSpeed = 400;
     }
 
     window.typewriterTimeout = setTimeout(typeCycle, nextSpeed);
@@ -154,7 +153,58 @@ function initTypewriter() {
   typeCycle();
 }
 
-// JAB BHI SECTION YA PAGE BADLEGA, YE AUTOMATICALLY RESUME KAREGA
-document.addEventListener("DOMContentLoaded", initTypewriter);
-window.addEventListener("hashchange", initTypewriter);
-window.addEventListener("pageshow", initTypewriter);
+// 🔄 REVIEWS SLIDER INITIALIZATION ENGINE
+function initReviewsSlider() {
+  const track = document.getElementById("testimonialTrack");
+  const dotsContainer = document.getElementById("sliderDots");
+  if (!track || !dotsContainer) return;
+
+  const cards = Array.from(track.children);
+  if (cards.length === 0) return;
+
+  // Purane dots clear karein taaki duplicate na hon
+  dotsContainer.innerHTML = "";
+  let currentIndex = 0;
+
+  // Dynamic dots create karna
+  cards.forEach((_, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.classList.add("slider-dot");
+    if (index === 0) dot.classList.add("active");
+    dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+    dotsContainer.appendChild(dot);
+
+    dot.addEventListener("click", () => {
+      goToSlide(index);
+    });
+  });
+
+  const dots = Array.from(dotsContainer.children);
+
+  function goToSlide(index) {
+    currentIndex = index;
+    const amountToMove = -currentIndex * 100;
+    track.style.transform = `translateX(${amountToMove}%)`;
+    
+    dots.forEach(d => d.classList.remove("active"));
+    if (dots[currentIndex]) dots[currentIndex].classList.add("active");
+  }
+
+  // Auto slide engine (Har 5 second me scroll hoga)
+  if (window.reviewInterval) clearInterval(window.reviewInterval);
+  window.reviewInterval = setInterval(() => {
+    let nextIndex = (currentIndex + 1) % cards.length;
+    goToSlide(nextIndex);
+  }, 5000);
+}
+
+// Combined trigger for both systems without breaking anything
+function runPortfolioFeatures() {
+  initTypewriter();
+  initReviewsSlider();
+}
+
+document.addEventListener("DOMContentLoaded", runPortfolioFeatures);
+window.addEventListener("hashchange", runPortfolioFeatures);
+window.addEventListener("pageshow", runPortfolioFeatures);
