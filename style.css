@@ -1699,3 +1699,38 @@ header.site-header .brand-logo img {
   background-color: #060813; /* Hover par dark theme matching */
   transform: scale(1.05);
 }
+
+
+/* Right side ka card jo photo ko contain karta hai */
+.hero-image-card {
+  background: #ffffff !important;
+  border-radius: 20px !important; /* Premium rounded square shape */
+  padding: 24px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Photo ka main container jisme right photo jaisa background gradient aayega */
+.hero-image-container {
+  position: relative !important;
+  width: 280px !important;
+  height: 280px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 16px !important; /* Square with slight curve corners */
+  padding: 8px !important; /* Border thickness space */
+  /* Exact right photo ke circles jaisa premium smooth multi-color gradient background */
+  background: linear-gradient(135deg, #e2906d 0%, #eebd8d 30%, #a2c4b9 70%, #639c87 100%) !important;
+}
+
+/* Image jo container ke andar square shape mein fit baithegi */
+.hero-image-container img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 12px !important; /* Inner square boundary */
+  background-color: #faf8f5 !important; /* Premium off-white fallback contrast */
+  display: block !important;
