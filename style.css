@@ -1734,3 +1734,44 @@ header.site-header .brand-logo img {
   border-radius: 12px !important; /* Inner square boundary */
   background-color: #faf8f5 !important; /* Premium off-white fallback contrast */
   display: block !important;
+
+/* Right side ka jo main white box card hai */
+.hero-image-card, 
+section[id="home"] .hero-image-card,
+section .reveal[class*="image"],
+div[class*="hero"] div[class*="image"] {
+  background: #ffffff !important;
+  border-radius: 20px !important; /* Premium rounded square box */
+  padding: 24px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Photo ka round frame hatakar premium square border gradient dene ke liye */
+.hero-image-card div, 
+.hero-image-container,
+div[class*="image"] div:has(img) {
+  position: relative !important;
+  width: 280px !important;
+  height: 280px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 16px !important; /* Perfect square with smooth corners */
+  padding: 8px !important; /* Gradient border ki thickness */
+  /* Right round photo ke circles jaisa exact premium matching gradient background */
+  background: linear-gradient(135deg, #e2906d 0%, #eebd8d 30%, #a2c4b9 70%, #639c87 100%) !important;
+}
+
+/* Image ko round (circle) se force karke square mein change karne ke liye */
+.hero-image-card img,
+.hero-image-container img,
+div[class*="image"] img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 12px !important; /* Photo ke inner corners square rahenge */
+  display: block !important;
+}
