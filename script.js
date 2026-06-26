@@ -76,38 +76,6 @@ if (contactForm) {
     if (projectType && !projectType.value) { document.getElementById("projectTypeError").textContent = "Select your project type."; isValid = false; }
     if (!message || !message.value.trim()) { document.getElementById("messageError").textContent = "Message is required."; isValid = false; }
 
-    if (contactForm) {
-  contactForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Page reload rokne ke liye
-
-    const name = document.getElementById("name");
-    const email = document.getElementById("email");
-    const mobile = document.getElementById("mobile");
-    const message = document.getElementById("message");
-    const successMessage = document.getElementById("successMessage");
-
-    // Purane errors ko saaf karne ke liye
-    document.getElementById("nameError").textContent = "";
-    document.getElementById("emailError").textContent = "";
-    document.getElementById("mobileError").textContent = "";
-    document.getElementById("projectTypeError").textContent = "";
-    document.getElementById("messageError").textContent = "";
-    if (successMessage) successMessage.textContent = "";
-
-    let isValid = true;
-
-    if (!name || !name.value.trim()) { document.getElementById("nameError").textContent = "Name is required."; isValid = false; }
-    if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { document.getElementById("emailError").textContent = "Enter a valid email."; isValid = false; }
-    
-    const mobileValue = mobile ? mobile.value.trim() : "";
-    if (!mobileValue || !/^[6-9]\d{9}$/.test(mobileValue)) { 
-      document.getElementById("mobileError").textContent = "Mobile number must be 10 digits and start with 6, 7, 8, or 9."; 
-      isValid = false; 
-    }
-    
-    if (projectType && !projectType.value) { document.getElementById("projectTypeError").textContent = "Select your project type."; isValid = false; }
-    if (!message || !message.value.trim()) { document.getElementById("messageError").textContent = "Message is required."; isValid = false; }
-
     if (isValid) {
       if (successMessage) {
         successMessage.style.color = "#6366f1";
@@ -301,3 +269,43 @@ if (backToTopBtn) {
 }// ⚡ EMAILJS ACCOUNT INITIALIZATION (FORCING PUBLIC KEY CONNECT)
 // Note: Is double quotes ke andar apni actual EmailJS Public Key daal dena bhai!
 emailjs.init("3nhYzXLZN4Ljnj6Hm");
+
+// =====================================================================
+// ⚡ FIX ENGINE: PROJECTS FILTER ENGINE ONLY (NO OTHER CHANGES)
+// =====================================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const filterButtons = document.querySelectorAll(".filter-bar .filter-btn");
+  const projectCards = document.querySelectorAll(".project-grid .project-card");
+
+  if (filterButtons.length > 0 && projectCards.length > 0) {
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        // Active button ka styling change karne ke liye
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        // Selected category uthane ke liye
+        const filterValue = button.getAttribute("data-filter");
+
+        // Cards ko hide aur show karne ka smooth layout function
+        projectCards.forEach(card => {
+          const cardCategory = card.getAttribute("data-category");
+
+          if (filterValue === "all" || cardCategory === filterValue) {
+            card.style.display = "block";
+            // Halke se bounce animation ke liye agar reveal class trigger ho
+            setTimeout(() => {
+              card.style.opacity = "1";
+              card.style.transform = "scale(1)";
+            }, 10);
+          } else {
+            card.style.opacity = "0";
+            card.style.transform = "scale(0.95)";
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  }
+});
