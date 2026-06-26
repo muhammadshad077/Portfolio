@@ -23,7 +23,6 @@ body {
   overflow-x: hidden;
 }
 
-/* 🟢 NAVBAR SYSTEM */
 .site-header {
   position: fixed;
   top: 0;
@@ -70,7 +69,6 @@ body {
   color: var(--accent);
 }
 
-/* 🟢 HERO LAYOUT GRID */
 .hero {
   position: relative;
   display: grid;
@@ -101,7 +99,6 @@ body {
   margin-bottom: 32px;
 }
 
-/* 🟢 100% PERFECT ORIGINAL ROUND PROFILE LAYOUT RECONSTRUCTION */
 .hero-image-card {
   background: var(--surface);
   border-radius: 24px;
@@ -119,9 +116,8 @@ body {
   position: relative;
   width: 260px;
   height: 260px;
-  border-radius: 50% !important; /* Forces perfect circle boundary geometry */
+  border-radius: 50% !important;
   padding: 6px;
-  /* Original iconic smooth multi-color circular gradient blend */
   background: linear-gradient(135deg, #e2906d 0%, #eebd8d 30%, #a2c4b9 70%, #639c87 100%);
   display: flex;
   align-items: center;
@@ -132,11 +128,10 @@ body {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  border-radius: 50% !important; /* Perfect round shape image masking layer */
+  border-radius: 50% !important;
   display: block;
 }
 
-/* 🟢 STATS AREA */
 .hero-stats {
   display: flex;
   justify-content: space-between;
@@ -163,7 +158,6 @@ body {
   margin-top: 2px;
 }
 
-/* 🟢 PROJECTS & SECTIONS STACK */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
